@@ -40,8 +40,15 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 print(f"  Train: {len(X_train)}, Test: {len(X_test)}")
 
-# ── 4. Train LightGBM ─────────────────────────────────────────────────────
-print("Training LightGBM …")
+# ── 4. Train LightGBM with monotonic constraints ─────────────────────────
+# Enforce clinically correct directional relationships:
+#   prior_admissions: more → higher readmission risk
+#   age: older → higher readmission risk
+#   length_of_stay: longer stay → higher readmission risk
+constraint_map = {"prior_admissions": 1, "age": 1, "length_of_stay": 1}
+monotone_constraints = [constraint_map.get(f, 0) for f in feature_cols]
+print(f"Training LightGBM with monotonic constraints …")
+print(f"  Constraints: {dict(zip(feature_cols, monotone_constraints))}")
 model = lgb.LGBMClassifier(
     n_estimators=300,
     learning_rate=0.05,
@@ -49,6 +56,7 @@ model = lgb.LGBMClassifier(
     class_weight="balanced",
     random_state=42,
     verbose=-1,
+    monotone_constraints=monotone_constraints,
 )
 model.fit(X_train, y_train)
 
