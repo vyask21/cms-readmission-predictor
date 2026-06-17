@@ -172,7 +172,10 @@ print("Building feature table …")
 con.execute("""
 CREATE TABLE features AS
 SELECT
-    CLM_ID                            AS claim_id,
+    -- CLM_ID is NOT unique in CMS SynPUF data (68 CLM_IDs appear twice,
+    -- 7 of those share identical CLM_ID+ADMSN+DSCHRG but differ in LOS).
+    -- Use CLM_ID || '_' || CLM_ADMSN || '_' || rn for a guaranteed-unique key.
+    (CLM_ID || '_' || CAST(CLM_ADMSN AS VARCHAR) || '_' || CAST(rn AS VARCHAR))  AS claim_id,
     DESYNPUF_ID                       AS beneficiary_id,
     readmit_30d,
     age_at_admission                  AS age,
