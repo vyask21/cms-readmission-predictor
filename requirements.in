@@ -1,0 +1,13 @@
+pandas
+duckdb
+pyarrow
+scikit-learn
+lightgbm
+matplotlib
+seaborn
+shap
+mlflow
+papermill
+ipykernel
+nbconvert
+streamlit
