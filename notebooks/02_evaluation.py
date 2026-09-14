@@ -26,7 +26,7 @@ from sklearn.metrics import (
 )
 import shap
 
-PROJ = pathlib.Path("/home/node/.openclaw/projects/cms-readmission-predictor")
+PROJ = next(p for p in [pathlib.Path.cwd(), *pathlib.Path.cwd().parents] if (p / "requirements.txt").exists())
 OUTDIR = PROJ / "notebooks"
 
 # %% [markdown]

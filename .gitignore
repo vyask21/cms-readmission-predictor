@@ -6,3 +6,8 @@ data/interim/
 mlruns/
 *.parquet
 .ipynb_checkpoints/
+
+# Internal working script: kept on disk, not published. A one-off Part 1 QA trace written
+# against the sandbox the pipeline was first built in. tests/test_pipeline.py is the
+# maintained check.
+qa_part1.py

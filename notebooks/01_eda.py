@@ -25,8 +25,8 @@ import seaborn as sns
 
 # %%
 # Resolve project root (works both in .py script and .ipynb)
-NOTEBOOK_DIR = pathlib.Path("/home/node/.openclaw/projects/cms-readmission-predictor/notebooks")
-PROJ = NOTEBOOK_DIR.parent
+PROJ = next(p for p in [pathlib.Path.cwd(), *pathlib.Path.cwd().parents] if (p / "requirements.txt").exists())
+NOTEBOOK_DIR = PROJ / "notebooks"
 PARQUET = PROJ / "data" / "interim" / "features.parquet"
 OUTDIR  = NOTEBOOK_DIR
 
